@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2ae6964ec0abe54bb47ea4526652afa, type: 3}
+  m_Name: corn
+  m_EditorClassIdentifier: 
+  _itemName: "\u8D64\u3044\u30B3\u30FC\u30F3"
+  _itemPoint: 0
+  _itemHint: 
+  _itemObject: {fileID: 1149402644793052, guid: 6e085225aa8d3bd4db5ac8ebab604fe1,
+    type: 2}
+  _atOneFloor: 0
+  _atTwoFloor: 0
+  positionEnumerate: 0
