@@ -1,28 +1,32 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.SceneManagement;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using Valve.VR.InteractionSystem;
 
+[RequireComponent(typeof(Interactable))]
 public class SceneChangeToMiniture : MonoBehaviour
 {
     public string SceneName = "";
-    private VRTK.VRTK_InteractableObject vrtk_InteractableObject = new VRTK.VRTK_InteractableObject();
     private float GripTime;
     readonly float DecideGripTime = 3.0f;
 
+    Interactable interactable;
+
     private void Start()
     {
-        vrtk_InteractableObject = this.gameObject.GetComponent<VRTK.VRTK_InteractableObject>();
-        vrtk_InteractableObject.isGrabbable = true;
+        interactable = GetComponent<Interactable>();
     }
 
-    private void Update()
+    private void HandHoverUpdate(Hand hand)
     {
-        if (vrtk_InteractableObject.isGrabbable)
+        var grabType = hand.GetGrabStarting();
+        var endedGrabbing = hand.IsGrabEnding(gameObject);
+        if (endedGrabbing)
         {
             GripTime = 0;
         }
-        else
+        if (interactable.attachedToHand == null && grabType == GrabTypes.Grip)
         {
             GripTimeCounter();
         }
@@ -41,5 +45,3 @@ public class SceneChangeToMiniture : MonoBehaviour
     }
 
 }
-
-
