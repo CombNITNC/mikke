@@ -4,12 +4,16 @@ using UnityEngine;
 
 public class SpreadItemOnMiniature : MonoBehaviour
 {
-    [SerializeField] private int area;
-    [SerializeField] private ItemRegistrator itemRegistrator;
+    [SerializeField] private int area = 0;
+    [SerializeField] private ItemRegistrator itemRegistrator = null;
 
     // Use this for initialization
     void Start()
     {
+        if (itemRegistrator == null)
+        {
+            Debug.LogError("itemRegistrator is null");
+        }
         putItemSpread();
     }
 
@@ -46,5 +50,3 @@ public class SpreadItemOnMiniature : MonoBehaviour
 
     }
 }
-
-

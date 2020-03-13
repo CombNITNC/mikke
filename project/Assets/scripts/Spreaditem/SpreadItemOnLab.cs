@@ -4,12 +4,16 @@ using UnityEngine;
 
 public class SpreadItemOnLab : MonoBehaviour
 {
-    [SerializeField]private int area;
-    [SerializeField]private ItemRegistrator itemRegistrator;
+    [SerializeField] private int area = 0;
+    [SerializeField] private ItemRegistrator itemRegistrator = null;
 
     // Use this for initialization
     void Start()
     {
+        if (itemRegistrator == null)
+        {
+            Debug.LogError("itemRegistrator is null");
+        }
         putItemSpread();
     }
 
@@ -17,7 +21,7 @@ public class SpreadItemOnLab : MonoBehaviour
     {
         foreach (var Q in itemRegistrator.ItemQ)
         {
-            if(Q.gameObject.GetComponent<ItemInformation>().ItemRespawnPosition != 0)
+            if (Q.gameObject.GetComponent<ItemInformation>().ItemRespawnPosition != 0)
             {
                 continue;
             }
@@ -46,5 +50,3 @@ public class SpreadItemOnLab : MonoBehaviour
 
     }
 }
-
-

@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Collections;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-
 
 /*
  * アイテムを並べる場所を決定するためのクラス。
@@ -11,20 +10,22 @@ using UnityEngine;
 public class DecideItemPositionOnField : MonoBehaviour
 {
 
-    [SerializeField] private ItemRegistrator itemRegistrator;
-
-
+    [SerializeField] private ItemRegistrator itemRegistrator = null;
 
     //private Dictionary<int, Transform> itemResponePositionDictionary = new Dictionary<int,Transform>();
 
     // Use this for initialization
     private void Start()
     {
+        if (itemRegistrator == null)
+        {
+            Debug.LogError("itemRegistrator is null");
+        }
         //while(itemRegistrator.ItemQ == null)
         //{
         //    StartCoroutine(WaitItemObjectsInclude());
         //}
-       putItemDecidedPosition();
+        putItemDecidedPosition();
     }
 
     private IEnumerator WaitItemObjectsInclude()
@@ -41,7 +42,7 @@ public class DecideItemPositionOnField : MonoBehaviour
             transform = _transform;
             counter = _counter;
         }
-            
+
     }
     private void putItemDecidedPosition()
     {
@@ -64,10 +65,10 @@ public class DecideItemPositionOnField : MonoBehaviour
         foreach (Transform childTransform in this.transform)
         {
             //itemResponePositionDictionary.Add(childTransform.gameObject.GetComponent<PositionEnumForResponObject>().RespawnPosition,childTransform);
-            switch(childTransform.gameObject.GetComponent<PositionEnumForResponObject>().RespawnPosition)
+            switch (childTransform.gameObject.GetComponent<PositionEnumForResponObject>().RespawnPosition)
             {
                 case 1:
-                    tablePosition.Add(new ComplexTypeTransform(childTransform,0));
+                    tablePosition.Add(new ComplexTypeTransform(childTransform, 0));
                     break;
                 case 2:
                     shelfPosition.Add(new ComplexTypeTransform(childTransform, 0));
@@ -92,14 +93,14 @@ public class DecideItemPositionOnField : MonoBehaviour
 
         foreach (var instancedGameObject in itemRegistrator.ItemQ)
         {
-            if(itemRegistrator.ItemQ == null)
+            if (itemRegistrator.ItemQ == null)
             {
                 continue;
             }
 
             var itemResponeKey = instancedGameObject.GetComponent<ItemInformation>().ItemRespawnPosition;
 
-            if(itemResponeKey <= 0)
+            if (itemResponeKey <= 0)
             {
                 /*
                     例外処理についてここに処理を書く
@@ -116,7 +117,7 @@ public class DecideItemPositionOnField : MonoBehaviour
                     //tablePosition.Sort((a, b) => a.counter - b.counter);
 
                     break;
-                //棚の中にちらばらせる場合　 :　2
+                    //棚の中にちらばらせる場合　 :　2
                 case 2:
                     instancedGameObject.transform.position = ArrageinDrawer(shelfPosition[shelfNumberCounter]);
                     shelfNumberCounter++;
@@ -125,7 +126,7 @@ public class DecideItemPositionOnField : MonoBehaviour
                         shelfNumberCounter = 0;
                     }
                     break;
-                //引き出しの中に格納する場合 :　3
+                    //引き出しの中に格納する場合 :　3
                 case 3:
 
                     instancedGameObject.transform.position = ArrageOnShelf(drawerPosition[drawerNumberCounter]);
@@ -135,7 +136,7 @@ public class DecideItemPositionOnField : MonoBehaviour
                         drawerNumberCounter = 0;
                     }
                     break;
-                //森の地面に散らばせる場合 :　10
+                    //森の地面に散らばせる場合 :　10
                 case 10:
 
                     instancedGameObject.transform.position = ArrageOnShelf(Forrest_Ground[Forrest_GroundNumbwerCounter]);
@@ -145,7 +146,7 @@ public class DecideItemPositionOnField : MonoBehaviour
                         Forrest_GroundNumbwerCounter = 0;
                     }
                     break;
-                //Labの中央テーブルに散らばせる場合 :　21
+                    //Labの中央テーブルに散らばせる場合 :　21
                 case 21:
 
                     instancedGameObject.transform.position = ArrageOnShelf(Lab_CenterTable[Lab_CenterTableNumbwerCounter]);
@@ -155,7 +156,7 @@ public class DecideItemPositionOnField : MonoBehaviour
                         Lab_CenterTableNumbwerCounter = 0;
                     }
                     break;
-                //Labのサイドテーブルに散らばせる場合 :　22
+                    //Labのサイドテーブルに散らばせる場合 :　22
                 case 22:
 
                     instancedGameObject.transform.position = ArrageOnShelf(Lab_SideTable[Lab_SideTableNumbwerCounter]);
@@ -165,7 +166,7 @@ public class DecideItemPositionOnField : MonoBehaviour
                         Lab_SideTableNumbwerCounter = 0;
                     }
                     break;
-                //Miniatureの床に散らばせる場合 :　30
+                    //Miniatureの床に散らばせる場合 :　30
                 case 30:
 
                     instancedGameObject.transform.position = ArrageOnShelf(Miniature_Ground[Miniature_GroundNumbwerCounter]);
@@ -202,10 +203,10 @@ public class DecideItemPositionOnField : MonoBehaviour
     {
         pos.counter += 1;
         Vector3 vec;
-        vec = new Vector3(Random.Range(pos.transform.position.x- pos.transform.localScale.x,
-                        pos.transform.position.x + pos.transform.localScale.x), pos.transform.position.y,
-                        Random.Range(pos.transform.position.z - pos.transform.localScale.z,
-                        pos.transform.position.z + pos.transform.localScale.z));
+        vec = new Vector3(Random.Range(pos.transform.position.x - pos.transform.localScale.x,
+                pos.transform.position.x + pos.transform.localScale.x), pos.transform.position.y,
+            Random.Range(pos.transform.position.z - pos.transform.localScale.z,
+                pos.transform.position.z + pos.transform.localScale.z));
         return vec;
     }
     private int Compare(ComplexTypeTransform a, ComplexTypeTransform b)
@@ -215,7 +216,7 @@ public class DecideItemPositionOnField : MonoBehaviour
 
     private int ReturnRandomValue(int value)
     {
-        value = Random.Range(0 , value);
+        value = Random.Range(0, value);
         return value;
     }
 }

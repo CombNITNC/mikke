@@ -1,10 +1,10 @@
 fileFormatVersion: 2
 guid: 39e0a6511cf817c4fa09a8093b12294d
-timeCreated: 1573176822
-licenseType: Free
 MonoImporter:
+  externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - grabSound: {fileID: 8300000, guid: 8c272644f94a04141bb112c56ce8466b, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

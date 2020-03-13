@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Valve.VR.InteractionSystem;
 
-[RequireComponent(typeof(Interactable))]
+[RequireComponent(typeof(Interactable), typeof(AudioSource))]
 public class GrabItemEvent : MonoBehaviour
 {
 
@@ -27,8 +27,15 @@ public class GrabItemEvent : MonoBehaviour
     public float GripTime; // { get; set; }
     readonly float DecideGripTime = 1.0f;
 
+    AudioSource source;
+
+    [SerializeField] AudioClip grabSound = null;
+
     private void Start()
     {
+        source = GetComponent<AudioSource>();
+        source.clip = grabSound;
+
         interactable = GetComponent<Interactable>();
 
         itemRegistrator = GameObject.FindGameObjectWithTag("ItemRegistrator").GetComponent<ItemRegistrator>();
@@ -105,7 +112,7 @@ public class GrabItemEvent : MonoBehaviour
     {
         if (!GameObjectGrabbedByController())
         {
-            SoundManager.PlayGrubTimeSound();
+            source.Play();
             IsNotGrrabed = true;
             GripTime += Time.deltaTime;
             if (GripTime > DecideGripTime)
@@ -117,7 +124,7 @@ public class GrabItemEvent : MonoBehaviour
         }
         if (IsNotGrrabed == true && interactable.enabled == false)
         {
-            SoundManager.StopGrubTimeSound();
+            source.Stop();
             GripTime -= Time.deltaTime;
             if (GripTime < 0)
             {

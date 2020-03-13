@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -22,7 +23,8 @@ using UnityEngine.UI;
  *      GrabbedItemTime : float {get;set;}
  */
 
-public class UIManagement:MonoBehaviour{
+public class UIManagement : MonoBehaviour
+{
 
     /// <summary>
     /// お題の名前
@@ -50,21 +52,19 @@ public class UIManagement:MonoBehaviour{
     /// </summary>
     //public Slider GrabbedItemTime_EditOnUnity;
     public Image GrabbedItemTime_EditOnUnity;
-    public float GrabbedItemTime { get; set; }//ok
+    public float GrabbedItemTime { get; set; } //ok
 
     /// <summary>
     /// ゲーム時間：開始から終了まで
     /// </summary>
     public Text GameTimeFromStart_EditOnUnity;
 
-    [SerializeField]private ItemRegistrator ItemRegistrator;
-    [SerializeField]private TimeCounter timeCounter;
-
+    [SerializeField] private ItemRegistrator ItemRegistrator = null;
+    [SerializeField] private TimeCounter timeCounter = null;
 
     //デザイン案が決まり次第、以下のフィールドに対する処理を追加する
     //public Text IsMatchedWithOdai_EditOnUnity;
     //public Image GrabbedTime_EditOnUnity;
-
 
     /// <summary>
     /// つかんだアイテムがお題と一致しているか
@@ -75,8 +75,6 @@ public class UIManagement:MonoBehaviour{
     ///// </summary>
     //public float GameTimeFromStart { get; set; }
 
-
-
     private void Update()
     {
         if (timeCounter == null)
@@ -85,14 +83,14 @@ public class UIManagement:MonoBehaviour{
         }
         //GrabItemName_EditOnUnity.text = GrabItemName;
         GrabbedItemTime_EditOnUnity.fillAmount = GrabbedItemTime;
-        GameTimeFromStart_EditOnUnity.text = ((int)(timeCounter.timeOutValue - timeCounter.GameTimeRangeZeroToOne * timeCounter.timeOutValue)/60).ToString()
-                                                + ":" + ((int)(timeCounter.timeOutValue - timeCounter.GameTimeRangeZeroToOne * timeCounter.timeOutValue) % 60).ToString();
+        var seconds = (int) (timeCounter.timeOutValue - timeCounter.GameTimeRangeZeroToOne * timeCounter.timeOutValue);
+        GameTimeFromStart_EditOnUnity.text = String.Format("{0}:{1}", seconds / 60, seconds % 60);
         UITextUpdate();
     }
 
     public void UITextUpdate()
     {
-        if(ItemRegistrator == null)
+        if (ItemRegistrator == null)
         {
             return;
         }

@@ -14,33 +14,18 @@ using UnityEngine;
  * 
  */
 
-public class SoundManager : MonoBehaviour {
+public class SoundManager : MonoBehaviour
+{
+    [SerializeField] private AudioSource _footsteps = null;
+    [SerializeField] private AudioSource gameSound = null;
 
-    static public AudioSource True;
-    static public AudioSource False;
-    static public AudioSource GrubTiming;
-    static public AudioSource Footsteps;
-
-    [SerializeField]private AudioSource _grubTime;
-    [SerializeField]private AudioSource _true;
-    [SerializeField]private AudioSource _false;
-    [SerializeField]private AudioSource _footsteps;
-    [SerializeField]private AudioSource gameSound;
     private int volume_gameMusic = 0;
     private int volume_walkSound = 0;
     private bool IsMusicPlaying = false;
-    private bool IsWalking = false;
+    private Coroutine walkSoundTask = null;
     public float DownVolumeLate = 0.15f;
 
-    private void Awake()
-    {
-        True = _true;
-        False  = _false;
-        GrubTiming = _grubTime;
-        Footsteps = _footsteps;
-    }
-
-        private void Update()
+    private void Update()
     {
         if (gameSound.time < 5f && IsMusicPlaying == false)
         {
@@ -54,78 +39,36 @@ public class SoundManager : MonoBehaviour {
             IsMusicPlaying = false;
             StopAllCoroutines();
             if (gameObject.activeSelf)
-            StartCoroutine(Fadeout_GameMusic());
+                StartCoroutine(Fadeout_GameMusic());
         }
 
-
-        //if (!Footsteps.isPlaying && IsWalking == false)
-        //{
-        //    IsWalking = true;
-        //    StopAllCoroutines();
-        //    if (gameObject.activeSelf)
-        //        StartCoroutine(Fadein_walk());
-        //}
-        //if (Footsteps.isPlaying && IsWalking == true)
-        //{
-        //    IsWalking = false;
-        //    StopAllCoroutines();
-        //    if (gameObject.activeSelf)
-        //        StartCoroutine(Fadeout_walk());
-        //}
-    }
-
-
-    static public void PlayTrueSound()
-    {
-        True.PlayOneShot(True.clip);
-    }
-
-    static public void PlayFalseSound()
-    {
-        False.PlayOneShot(False.clip);
-    }
-
-    static public void PlayGrubTimingSound()
-    {
-        GrubTiming.PlayOneShot(GrubTiming.clip);
-    }
-
-    static public void PlayfootstepsSound()
-    {
-        if (!Footsteps.isPlaying)
+        if (!_footsteps.isPlaying && walkSoundTask == null)
         {
-            Footsteps.Play();
+            StopAllCoroutines();
+            if (gameObject.activeSelf)
+                walkSoundTask = StartCoroutine(Fadein_walk());
         }
-    }
-    static public void StopfootstepsSound()
-    {
-        if (Footsteps.isPlaying)
+        if (_footsteps.isPlaying && walkSoundTask == null)
         {
-            Footsteps.Pause();
+            StopAllCoroutines();
+            if (gameObject.activeSelf)
+                walkSoundTask = StartCoroutine(Fadeout_walk());
         }
     }
 
-    static public void VolumeChangefootstepsSound(float value)
+    public void PlayfootstepsSound()
     {
-        Footsteps.volume = value;
-    }
-
-    static public void PlayGrubTimeSound()
-    {
-        if (!GrubTiming.isPlaying)
+        if (!_footsteps.isPlaying)
         {
-            GrubTiming.Play();
+            _footsteps.Play();
         }
-        
     }
-
-    static public void StopGrubTimeSound()
+    public void StopfootstepsSound()
     {
-        if (GrubTiming.isPlaying)
+        if (_footsteps.isPlaying)
         {
-            Footsteps.Pause();
+            _footsteps.Pause();
         }
-
     }
 
     IEnumerator Fadein_GameMusic()
@@ -133,7 +76,7 @@ public class SoundManager : MonoBehaviour {
         gameSound.enabled = true;
         for (; volume_gameMusic < 100; volume_gameMusic++)
         {
-            gameSound.volume = (float)volume_gameMusic / 100 * DownVolumeLate;
+            gameSound.volume = (float) volume_gameMusic / 100 * DownVolumeLate;
             yield return null;
         }
         gameSound.volume = DownVolumeLate;
@@ -143,7 +86,7 @@ public class SoundManager : MonoBehaviour {
     {
         for (; volume_gameMusic > 0; volume_gameMusic--)
         {
-            gameSound.volume = (float)(volume_gameMusic) / 100 * DownVolumeLate;
+            gameSound.volume = (float) (volume_gameMusic) / 100 * DownVolumeLate;
             yield return null;
         }
         gameSound.volume = 0;
@@ -152,28 +95,28 @@ public class SoundManager : MonoBehaviour {
 
     IEnumerator Fadein_walk()
     {
-        Footsteps.enabled = true;
+        _footsteps.enabled = true;
         for (; volume_walkSound < 1000; volume_walkSound++)
         {
-            Footsteps.volume = ((float)volume_walkSound / 1000);
-            if (Footsteps.volume > DownVolumeLate)
+            _footsteps.volume = ((float) volume_walkSound / 1000);
+            if (_footsteps.volume > DownVolumeLate)
             {
-                Footsteps.volume = DownVolumeLate;
+                _footsteps.volume = DownVolumeLate;
                 yield return null;
             }
             yield return null;
         }
-        Footsteps.volume = DownVolumeLate;
+        _footsteps.volume = DownVolumeLate;
     }
 
     IEnumerator Fadeout_walk()
     {
         for (; volume_walkSound > 0; volume_walkSound--)
         {
-            Footsteps.volume = ((float)(volume_walkSound) / 1000);
+            _footsteps.volume = ((float) (volume_walkSound) / 1000);
             yield return null;
         }
-        Footsteps.volume = 0;
-        Footsteps.enabled = false;
+        _footsteps.volume = 0;
+        _footsteps.enabled = false;
     }
 }

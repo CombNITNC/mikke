@@ -19,8 +19,9 @@ using UnityEngine;
  * 
  */
 
-
-public class ItemRegistrator : MonoBehaviour {
+[RequireComponent(typeof(AudioSource))]
+public class ItemRegistrator : MonoBehaviour
+{
 
     ///<summary>
     ///Scriptableobjectsを一元管理しており、
@@ -37,7 +38,7 @@ public class ItemRegistrator : MonoBehaviour {
         set { this._itemQ = value; }
     }
 
-     private string _odaiName;
+    private string _odaiName;
     public string OdaiName
     {
         get { return _odaiName; }
@@ -53,14 +54,22 @@ public class ItemRegistrator : MonoBehaviour {
         get { return _odaiLeftAmount; }
     }
 
-    ScoreCounter scoreCounter; 
+    ScoreCounter scoreCounter;
+
+    AudioSource source;
+    [SerializeField] AudioClip correctSound = null;
+    [SerializeField] AudioClip failSound = null;
+
+    void Start()
+    {
+        source = GetComponent<AudioSource>();
+    }
 
     void Awake()
     {
         InstanceItemGameObjects();
         InstanceSakuraItemGameObjects();
     }
-
 
     //お題は常に番号で管理される。プレイヤーがお題を１クリアするごとに１繰り上がる。
     private int NowOdaiNumber = 0;
@@ -78,7 +87,7 @@ public class ItemRegistrator : MonoBehaviour {
     /// </summary>
     /// 
 
-        private void InstanceItemGameObjects()
+    private void InstanceItemGameObjects()
     {
         _odaiLeftAmount = 0;
         findScriptableObject = this.GetComponent<FindScriptableobjects>();
@@ -109,20 +118,20 @@ public class ItemRegistrator : MonoBehaviour {
                 bool itemGeneratedAlsoIsAllowedTo;
                 itemGeneratedAlsoIsAllowedTo = CheckNoMissFromItemInformation(sourceinformation);
 
-                if(itemGeneratedAlsoIsAllowedTo == false)
+                if (itemGeneratedAlsoIsAllowedTo == false)
                 {
                     Destroy(instancedGameObject);
                     continue;
                 }
                 else
                 {
-                 iteminformation.itemInformation(sourceinformation.ItemName,
-                                                 sourceinformation.ItemObject,
-                                                 kakunoujyun,
-                                                 sourceinformation.ItemPoint, 
-                                                 (int)sourceinformation.positionEnumerate, 
-                                                 sourceinformation.ItemHint
-                                                );
+                    iteminformation.itemInformation(sourceinformation.ItemName,
+                        sourceinformation.ItemObject,
+                        kakunoujyun,
+                        sourceinformation.ItemPoint,
+                        (int) sourceinformation.positionEnumerate,
+                        sourceinformation.ItemHint
+                    );
                     kakunoujyun += 1;
                 }
                 //アイテムをＱに格納する
@@ -156,11 +165,10 @@ public class ItemRegistrator : MonoBehaviour {
                 var iteminformation = instancedGameObject.AddComponent<ItemInformation>();
 
                 iteminformation.itemInformation("SakuraObjects",
-                                                instancedGameObject,
-                                                -1,
-                                                0,
-                                                0
-                                               );
+                    instancedGameObject, -1,
+                    0,
+                    0
+                );
                 _itemQ.Enqueue(instancedGameObject);
             }
 
@@ -223,9 +231,9 @@ public class ItemRegistrator : MonoBehaviour {
 
     public void DestroyItem(int grabbedItemNumber)
     {
-        if(grabbedItemNumber == NowOdaiNumber)
+        if (grabbedItemNumber == NowOdaiNumber)
         {
-            SoundManager.PlayTrueSound();
+            source.PlayOneShot(correctSound);
 
             ScoreCounter.AddScoreValue(_itemQ.Peek().GetComponent<ItemInformation>().ItemPoint);
             Destroy(_itemQ.Peek());
@@ -237,7 +245,7 @@ public class ItemRegistrator : MonoBehaviour {
         }
         else
         {
-            SoundManager.PlayFalseSound();
+            source.PlayOneShot(failSound);
 
             NowOdaiNumber += 0;
         }
@@ -251,4 +259,3 @@ public class ItemRegistrator : MonoBehaviour {
         _odaiHint = _itemQ.Peek().GetComponent<ItemInformation>().ItemHint;
     }
 }
-
