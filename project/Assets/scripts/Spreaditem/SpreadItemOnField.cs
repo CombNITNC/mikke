@@ -1,9 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class SpreadItemOnField : MonoBehaviour {
-
+public class SpreadItemOnField : MonoBehaviour
+{
 
     public GameObject[] objects;
 
@@ -14,10 +13,9 @@ public class SpreadItemOnField : MonoBehaviour {
     public int Amount;
     public int area;
 
-    [SerializeField]ItemRegistrator IR = new ItemRegistrator();
+    [SerializeField] ItemRegistrator IR = new ItemRegistrator();
 
-
-    public List<GameObject> items_GameObjct = new List<GameObject>();//[SerializeField] private List<GameObject> items_GameObjct = new List<GameObject>();
+    public List<GameObject> items_GameObjct = new List<GameObject>(); //[SerializeField] private List<GameObject> items_GameObjct = new List<GameObject>();
     [SerializeField] private List<string> items_name = new List<string>();
 
     private Queue<GameObject> _itemObjectQ = new Queue<GameObject>();
@@ -68,16 +66,15 @@ public class SpreadItemOnField : MonoBehaviour {
     }
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         putItemSpread();
-
-
 
     }
 
     // Update is called once per frame
-    void Update () {
-    }
+    void Update()
+    { }
 
     private void putItemSpread()
     {
@@ -128,11 +125,9 @@ public class SpreadItemOnField : MonoBehaviour {
 
             int ransu = numbers[index];
 
-          //  Find.Enqueue(objects[ransu]);
+            //  Find.Enqueue(objects[ransu]);
 
             numbers.RemoveAt(index);
         }
     }
 }
-
-

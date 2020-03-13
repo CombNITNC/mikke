@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 /*
  * 
@@ -9,16 +7,17 @@ using UnityEngine;
  * 
  */
 
-public class PositionEnumForResponObject : MonoBehaviour {
+public class PositionEnumForResponObject : MonoBehaviour
+{
 
     public PositionEnumerate positionEnumerate;
-    public int RespawnPosition{ get; set; }
+    public int RespawnPosition { get; set; }
     private void OnValidate()
     {
-        RespawnPosition = (int)positionEnumerate;
+        RespawnPosition = (int) positionEnumerate;
     }
     private void Awake()
     {
-        RespawnPosition = (int)positionEnumerate;
+        RespawnPosition = (int) positionEnumerate;
     }
 }

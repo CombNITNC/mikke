@@ -1,11 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEditor.SceneManagement;
+using UnityEngine;
 using UnityEngine.SceneManagement;
-using System.Reflection;
-using UnityEngine.Events;
 
 [CustomEditor(typeof(FindScriptableobjects))]
 public class FindScriptableobjectsEditor : Editor

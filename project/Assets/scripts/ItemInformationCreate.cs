@@ -1,17 +1,15 @@
 ﻿using UnityEngine;
-using UnityEditor;
 
 [CreateAssetMenu(menuName = "アイテムを生成する！")]
-public class ItemInformationCreate : ScriptableObject 
+public class ItemInformationCreate : ScriptableObject
 {
     [SerializeField] private string _itemName;
     public string ItemName
     {
-        get
-        {return _itemName;}
+        get { return _itemName; }
         set
         {
-             _itemName = value;
+            _itemName = value;
         }
     }
 
@@ -32,18 +30,17 @@ public class ItemInformationCreate : ScriptableObject
     [SerializeField] private GameObject _itemObject;
     public GameObject ItemObject
     {
-        get
-        {return _itemObject;}
-        set
-        {_itemObject = value;}
+        get { return _itemObject; }
+        set { _itemObject = value; }
     }
 
     [SerializeField] private bool _atOneFloor;
-    public  bool AtOneFloor
+    public bool AtOneFloor
     {
         get { return _atOneFloor; }
         set { _atOneFloor = value; }
     }
+
     [SerializeField] private bool _atTwoFloor;
     public bool AtTwoFloor
     {
@@ -63,7 +60,7 @@ public class ItemInformationCreate : ScriptableObject
         }
         if (_atOneFloor)
         {
-           _atTwoFloor = false;
+            _atTwoFloor = false;
             _atOneFloor = true;
             return;
         }

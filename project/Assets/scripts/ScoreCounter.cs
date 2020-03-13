@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-
 
 /*
  * <概要>
@@ -17,7 +15,6 @@ using UnityEngine;
  *      SetScoreValueToRanking() : void
  *      
  */
-
 
 public class ScoreCounter : MonoBehaviour
 {

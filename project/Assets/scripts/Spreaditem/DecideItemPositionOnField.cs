@@ -7,6 +7,7 @@ using UnityEngine;
  *  （この処理については未完成）
  */
 
+// TODO: refactor the whole
 public class DecideItemPositionOnField : MonoBehaviour
 {
 

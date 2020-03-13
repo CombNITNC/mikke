@@ -1,9 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
-
+using UnityEngine;
 
 /*
  * <概要>
@@ -23,7 +21,6 @@ using UnityEditor;
  * 
  */
 
-
 public class FindScriptableobjects : MonoBehaviour
 {
     [Tooltip("\n☆使い方☆\n" +
@@ -40,7 +37,6 @@ public class FindScriptableobjects : MonoBehaviour
         set { _itemsList = value; }
     }
 
-
     //Directory名は任意で変更可
     [Tooltip("\nディレクトリのパスを記入\n")]
     [Header("ディレクトリパスを記入")]
@@ -53,7 +49,6 @@ public class FindScriptableobjects : MonoBehaviour
         DirectoryInfo dir = new DirectoryInfo(PathName);
         FileInfo[] info = dir.GetFiles("*.asset");
 
-
         if (info.Length == 0)
         {
             return;
@@ -64,7 +59,6 @@ public class FindScriptableobjects : MonoBehaviour
             _itemsList.Clear();
         }
 
-
         foreach (FileInfo f in info)
         {
             var element = AssetDatabase.LoadAssetAtPath<ItemInformationCreate>(Path.Combine(PathName, f.Name));
@@ -73,5 +67,5 @@ public class FindScriptableobjects : MonoBehaviour
 
         }
     }
-   
+
 }

@@ -1,8 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Linq;
 
 /*
  * <概要>
@@ -21,11 +20,12 @@ using System.Linq;
  *      
  */
 
-public class UIDisplayOnGameFinish : MonoBehaviour {
+public class UIDisplayOnGameFinish : MonoBehaviour
+{
 
     public Text ScoreText;
 
-    [SerializeField]public Text[] RankingText = new Text[10];
+    [SerializeField] public Text[] RankingText = new Text[10];
 
     void Start()
     {
@@ -50,7 +50,7 @@ public class UIDisplayOnGameFinish : MonoBehaviour {
 
         foreach (var elm in RankingText)
         {
-            if(toQueueRankingValue.Count == 0)
+            if (toQueueRankingValue.Count == 0)
             {
                 elm.text = "0  points";
                 continue;

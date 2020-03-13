@@ -1,8 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
+using UnityEngine;
 
 /*
  * <概要>
@@ -22,7 +21,8 @@ using UnityEditor;
  *      SakuraItemsList : List<GameObject> {get;set;}
  * 
  */
-public class FindSakuraObjects : MonoBehaviour {
+public class FindSakuraObjects : MonoBehaviour
+{
 
     private List<GameObject> _sakuraitemsList = new List<GameObject>();
 
@@ -48,7 +48,6 @@ public class FindSakuraObjects : MonoBehaviour {
         DirectoryInfo dir = new DirectoryInfo(PathName);
         FileInfo[] info = dir.GetFiles("*.prefab");
 
-
         if (info.Length == 0)
         {
             return;
@@ -58,7 +57,6 @@ public class FindSakuraObjects : MonoBehaviour {
         {
             _sakuraitemsList.Clear();
         }
-
 
         foreach (FileInfo f in info)
         {

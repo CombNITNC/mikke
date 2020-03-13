@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 ////VRTKが配布している物体を掴む処理↓
 //[RequireComponent(typeof(VRTK.VRTK_InteractableObject))]
@@ -8,7 +6,6 @@ using UnityEngine;
 //VRTK_InteractableObjectを返すための処理
 [RequireComponent(typeof(GrabItemEvent))]
 [RequireComponent(typeof(Rigidbody))]
-
 
 /*
  * <概要>
@@ -42,13 +39,12 @@ public class ItemInformation : MonoBehaviour
     /// <summary>
     /// アイテムの格納順を記述
     /// </summary>
-    public int ItemNumber;/*{ get; set; }**/
+    public int ItemNumber; /*{ get; set; }**/
 
     /// <summary>
     /// アイテムのヒントを記述
     /// </summary>
     public string ItemHint { get; set; }
-
 
     /// <summary>
     /// アイテム一つ当たりのポイントを記述
