@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using SteamVR_Controller;
 using UnityEngine;
 
 public class GrabItemEvent : MonoBehaviour {
@@ -17,19 +18,15 @@ public class GrabItemEvent : MonoBehaviour {
     private SteamVR_Controller.Device controller;
 
     private int _grabbedItemNumber = 0;
-    public int GrabbedItemNumber
-    {
-        get
-        {
+    public int GrabbedItemNumber {
+        get {
             return _grabbedItemNumber;
         }
     }
-    public float GripTime;// { get; set; }
+    public float GripTime; // { get; set; }
     readonly float DecideGripTime = 1.0f;
 
-
-    private void Start()
-    {
+    private void Start() {
 
         itemRegistrator = GameObject.FindGameObjectWithTag("ItemRegistrator").GetComponent<ItemRegistrator>();
         uiManagement = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManagement>();
@@ -57,21 +54,15 @@ public class GrabItemEvent : MonoBehaviour {
         //}
     }
 
-
     //---コンポーネントの追加---//
-    private void AddedVrtk_InteractableObjectComponent()
-    {
-        if (IsCompponentsAttached)
-        {
+    private void AddedVrtk_InteractableObjectComponent() {
+        if (IsCompponentsAttached) {
             return;
         }
-        if (this.GetComponent<VRTK.VRTK_InteractableObject>() != null)
-        {
+        if (this.GetComponent<VRTK.VRTK_InteractableObject>() != null) {
             IsCompponentsAttached = true;
             return;
-        }
-        else if (this.GetComponent<VRTK.VRTK_InteractableObject>() == null)
-        {
+        } else if (this.GetComponent<VRTK.VRTK_InteractableObject>() == null) {
             vrtk_InteractableObject = this.gameObject.AddComponent<VRTK.VRTK_InteractableObject>();
             vrtk_InteractableObject.isGrabbable = true;
 
@@ -82,48 +73,38 @@ public class GrabItemEvent : MonoBehaviour {
         }
     }
 
-    private void getItem_InformationComponent()
-    {
-        if (itemInformation == null)
-        {
+    private void getItem_InformationComponent() {
+        if (itemInformation == null) {
             itemInformation = this.GetComponent<ItemInformation>();
         }
     }
 
     //---グリップ時の処理---//
-    private bool GameObjectGrabbedByController()
-    {
+    private bool GameObjectGrabbedByController() {
         return vrtk_InteractableObject.isGrabbable;
     }
 
-    private int ReturnItemNumber()
-    {
+    private int ReturnItemNumber() {
         return (itemInformation != null && isItemGrabbed == false) ? itemInformation.ItemNumber : -1;
     }
 
-
     //---グリップ時間のカウント---//
 
-    private void GripTimeCounter()
-    {
-        if (!isItemGrabbed)
-        {
+    private void GripTimeCounter() {
+        if (!isItemGrabbed) {
             SoundManager.PlayGrubTimeSound();
             IsNotGrrabed = true;
             GripTime += Time.deltaTime;
-            if(GripTime > DecideGripTime)
-            {
+            if (GripTime > DecideGripTime) {
                 GripTime = 0;
                 this.gameObject.GetComponent<VRTK.VRTK_InteractableObject>().enabled = false;
                 itemRegistrator.DestroyItem(_grabbedItemNumber);
             }
         }
-        if(IsNotGrrabed == true && vrtk_InteractableObject.enabled == false)
-        {
+        if (IsNotGrrabed == true && vrtk_InteractableObject.enabled == false) {
             SoundManager.StopGrubTimeSound();
             GripTime -= Time.deltaTime;
-            if(GripTime < 0)
-            {
+            if (GripTime < 0) {
                 GripTime = 0;
                 IsNotGrrabed = false;
             }
@@ -131,10 +112,8 @@ public class GrabItemEvent : MonoBehaviour {
     }
 
     //---UI周りの処理---//
-    private void GrabTimeUIUpdate() 
-    {
-        if(!isItemGrabbed || IsNotGrrabed)
-        {
+    private void GrabTimeUIUpdate() {
+        if (!isItemGrabbed || IsNotGrrabed) {
             uiManagement.GrabbedItemTime = GripTime / DecideGripTime;
         }
     }
