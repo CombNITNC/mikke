@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using SteamVR_Controller;
 using UnityEngine;
 
 public class GrabItemEvent : MonoBehaviour {
@@ -14,8 +13,6 @@ public class GrabItemEvent : MonoBehaviour {
     private bool isItemGrabbed;
     private bool IsNotGrrabed;
     private bool IsGrabedSoundRang;
-
-    private SteamVR_Controller.Device controller;
 
     private int _grabbedItemNumber = 0;
     public int GrabbedItemNumber {
@@ -69,7 +66,7 @@ public class GrabItemEvent : MonoBehaviour {
             //任意の色に変更すること
             vrtk_InteractableObject.touchHighlightColor = Color.blue;
 
-            vrtk_InteractableObject.grabOverrideButton = VRTK.VRTK_ControllerEvents.ButtonAlias.Trigger_Press;
+            vrtk_InteractableObject.grabOverrideButton = VRTK.VRTK_ControllerEvents.ButtonAlias.TriggerPress;
         }
     }
 
