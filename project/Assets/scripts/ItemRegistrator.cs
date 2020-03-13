@@ -18,7 +18,7 @@ using UnityEngine;
  * 
  */
 
-[RequireComponent(typeof(AudioSource))]
+[RequireComponent(typeof(AudioSource), typeof(FindScriptableobjects))]
 public class ItemRegistrator : MonoBehaviour
 {
 
@@ -89,7 +89,7 @@ public class ItemRegistrator : MonoBehaviour
     private void InstanceItemGameObjects()
     {
         _odaiLeftAmount = 0;
-        findScriptableObject = this.GetComponent<FindScriptableobjects>();
+        findScriptableObject = GetComponent<FindScriptableobjects>();
 
         //お題を混ぜる
         queue_shuffle();
