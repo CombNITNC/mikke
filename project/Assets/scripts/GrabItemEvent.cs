@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GrabItemEvent : MonoBehaviour {
 
-    private VRTK.VRTK_InteractableObject vrtk_InteractableObject = new VRTK.VRTK_InteractableObject();
+    // private VRTK.VRTK_InteractableObject vrtk_InteractableObject = new VRTK.VRTK_InteractableObject();
     private ItemInformation itemInformation = null;
     private ItemRegistrator itemRegistrator = null;
     private UIManagement uiManagement = null;
@@ -14,7 +14,7 @@ public class GrabItemEvent : MonoBehaviour {
     private bool IsNotGrrabed;
     private bool IsGrabedSoundRang;
 
-    private SteamVR_Controller.Device controller;
+    // private SteamVR_Controller.Device controller;
 
     private int _grabbedItemNumber = 0;
     public int GrabbedItemNumber
@@ -65,21 +65,21 @@ public class GrabItemEvent : MonoBehaviour {
         {
             return;
         }
-        if (this.GetComponent<VRTK.VRTK_InteractableObject>() != null)
-        {
-            IsCompponentsAttached = true;
-            return;
-        }
-        else if (this.GetComponent<VRTK.VRTK_InteractableObject>() == null)
-        {
-            vrtk_InteractableObject = this.gameObject.AddComponent<VRTK.VRTK_InteractableObject>();
-            vrtk_InteractableObject.isGrabbable = true;
+        // if (this.GetComponent<VRTK.VRTK_InteractableObject>() != null)
+        // {
+        //     IsCompponentsAttached = true;
+        //     return;
+        // }
+        // else if (this.GetComponent<VRTK.VRTK_InteractableObject>() == null)
+        // {
+        //     vrtk_InteractableObject = this.gameObject.AddComponent<VRTK.VRTK_InteractableObject>();
+        //     vrtk_InteractableObject.isGrabbable = true;
 
-            //任意の色に変更すること
-            vrtk_InteractableObject.touchHighlightColor = Color.blue;
+        //     //任意の色に変更すること
+        //     vrtk_InteractableObject.touchHighlightColor = Color.blue;
 
-            vrtk_InteractableObject.grabOverrideButton = VRTK.VRTK_ControllerEvents.ButtonAlias.Trigger_Press;
-        }
+        //     vrtk_InteractableObject.grabOverrideButton = VRTK.VRTK_ControllerEvents.ButtonAlias.Trigger_Press;
+        // }
     }
 
     private void getItem_InformationComponent()
@@ -93,7 +93,7 @@ public class GrabItemEvent : MonoBehaviour {
     //---グリップ時の処理---//
     private bool GameObjectGrabbedByController()
     {
-        return vrtk_InteractableObject.isGrabbable;
+        return false; // vrtk_InteractableObject.isGrabbable;
     }
 
     private int ReturnItemNumber()
@@ -114,20 +114,20 @@ public class GrabItemEvent : MonoBehaviour {
             if(GripTime > DecideGripTime)
             {
                 GripTime = 0;
-                this.gameObject.GetComponent<VRTK.VRTK_InteractableObject>().enabled = false;
+                // this.gameObject.GetComponent<VRTK.VRTK_InteractableObject>().enabled = false;
                 itemRegistrator.DestroyItem(_grabbedItemNumber);
             }
         }
-        if(IsNotGrrabed == true && vrtk_InteractableObject.enabled == false)
-        {
-            SoundManager.StopGrubTimeSound();
-            GripTime -= Time.deltaTime;
-            if(GripTime < 0)
-            {
-                GripTime = 0;
-                IsNotGrrabed = false;
-            }
-        }
+        // if(IsNotGrrabed == true && vrtk_InteractableObject.enabled == false)
+        // {
+        //     SoundManager.StopGrubTimeSound();
+        //     GripTime -= Time.deltaTime;
+        //     if(GripTime < 0)
+        //     {
+        //         GripTime = 0;
+        //         IsNotGrrabed = false;
+        //     }
+        // }
     }
 
     //---UI周りの処理---//
